@@ -96,4 +96,44 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+// track size so it's easier to use
+unsigned int mySize=board.size();
+//walked out of bounds
+if(r>=mySize||c>=mySize) {
+  if (!word.empty()&&dict.count(word)) {
+    result.insert(word);\
+
+    return true;
+  }
+  else {
+    return false;
+  }
+  
+} // add the letter now
+word.push_back(board[r][c]);
+if(!prefix.count(word)&&!dict.count(word)){
+  std::string myPrevious=word.substr(0,word.size()-1);
+  if (myPrevious.empty()==false && dict.count(myPrevious)>0) {
+    result.insert (myPrevious);
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+// next step recursion
+bool myB = boggleHelper(dict,prefix,board,word,result,r+dr,c+dc,dr,dc);
+//not inserted
+if (myB==false) {
+  if (dict.count(word)>0) {
+    result.insert(word);
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+//inserted
+return true;
+
 }
